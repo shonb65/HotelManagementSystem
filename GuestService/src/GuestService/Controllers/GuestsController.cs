@@ -1,3 +1,4 @@
+using System.Net;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,7 @@ namespace HotelManagemnt.GuestService.Controllers
             return guest;
         }
 
+        // POST /guestsks
         [HttpPost]
         public ActionResult<GuestDto> Post(CreateGuestDto createGuestDto)
         {
@@ -56,5 +58,13 @@ namespace HotelManagemnt.GuestService.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            var index = guests.FindIndex(existingGuest => existingGuest.Id == id);
+            guests.RemoveAt(index);
+
+            return NoContent();
+        }
     }
 }
