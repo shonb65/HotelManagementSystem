@@ -26,9 +26,15 @@ namespace HotelManagemnt.GuestService.Controllers
 
         // GET /guests/{id}
         [HttpGet("{id}")]
-        public GuestDto GetById(Guid id)
+        public ActionResult<GuestDto> GetById(Guid id)
         {
             var guest = guests.Where(guest => guest.Id == id).SingleOrDefault();
+
+            if(guest == null)
+            {
+                return NotFound();
+            }
+
             return guest;
         }
 
@@ -47,6 +53,12 @@ namespace HotelManagemnt.GuestService.Controllers
         {
             var existingGuest = guests.Where(guest => guest.Id == id).SingleOrDefault();
 
+            if(existingGuest == null)
+            {
+                return NotFound();
+            }
+
+
             var updatedGuest = existingGuest with{
                 FirstName = updateGuestDto.FirstName,
                 LastName = updateGuestDto.LastName
@@ -62,6 +74,12 @@ namespace HotelManagemnt.GuestService.Controllers
         public IActionResult Delete(Guid id)
         {
             var index = guests.FindIndex(existingGuest => existingGuest.Id == id);
+
+            if(index < 0)
+            {
+                return NotFound();
+            }
+
             guests.RemoveAt(index);
 
             return NoContent();
