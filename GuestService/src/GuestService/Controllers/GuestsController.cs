@@ -30,5 +30,13 @@ namespace HotelManagemnt.GuestService.Controllers
             return guest;
         }
 
+        [HttpPost]
+        public ActionResult Post(CreateGuestDto createGuestDto)
+        {
+            var guest = new GuestDto(Guid.NewGuid(), createGuestDto.FirstName, createGuestDto.LastName);
+            guests.Add(guest);
+            return CreatedAtAction(nameof(GetById), new { id = guest.Id }, guest);
+        }
+
     }
 }
