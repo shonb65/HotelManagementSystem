@@ -1,9 +1,13 @@
+using System.Runtime.InteropServices;
 using System.Net;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using HotelManagemnt.GuestService.Dtos;
 using System.Linq;
+using HotelManagemnt.GuestService.Repositories;
+using HotelManagemnt.GuestService.Entities;
 
 namespace HotelManagemnt.GuestService.Controllers
 {
@@ -11,76 +15,83 @@ namespace HotelManagemnt.GuestService.Controllers
     [Route("guests")]
     public class GuestsController : ControllerBase
     {
-        private static readonly List<GuestDto> guests = new()
-        {
-            new GuestDto(Guid.NewGuid(), "Shon", "Buch"),
-            new GuestDto(Guid.NewGuid(), "Shon1", "Buch1"),
-            new GuestDto(Guid.NewGuid(), "Shon2", "Buch2")
-        };
+        // private static readonly List<GuestDto> guests = new()
+        // {
+        //     new GuestDto(Guid.NewGuid(), "Shon", "Buch"),
+        //     new GuestDto(Guid.NewGuid(), "Shon1", "Buch1"),
+        //     new GuestDto(Guid.NewGuid(), "Shon2", "Buch2")
+        // };
+
+        private readonly GuestsReposetory guestsReposetory = new();
 
         [HttpGet]
-        public IEnumerable<GuestDto> Get()
+        public async  Task<IEnumerable<GuestDto>> GetAsync()
         {
+            var guests = (await guestsReposetory.GetAllAsync())
+                        .Select(item => item.AsDto());
+
             return guests;
         }
 
         // GET /guests/{id}
         [HttpGet("{id}")]
-        public ActionResult<GuestDto> GetById(Guid id)
+        public async Task<ActionResult<GuestDto>> GetByIdAsync(Guid id)
         {
-            var guest = guests.Where(guest => guest.Id == id).SingleOrDefault();
+            var guest = await guestsReposetory.GetAsync(id);
 
             if(guest == null)
             {
                 return NotFound();
             }
 
-            return guest;
+            return guest.AsDto();
         }
 
         // POST /guestsks
         [HttpPost]
-        public ActionResult<GuestDto> Post(CreateGuestDto createGuestDto)
+        public async Task<ActionResult<GuestDto>> PostAsync(CreateGuestDto createGuestDto)
         {
-            var guest = new GuestDto(Guid.NewGuid(), createGuestDto.FirstName, createGuestDto.LastName);
-            guests.Add(guest);
-            return CreatedAtAction(nameof(GetById), new { id = guest.Id }, guest);
+            var guest = new Guest
+            {
+                FirstName = createGuestDto.FirstName,
+                LastName = createGuestDto.LastName
+            };
+            
+            await guestsReposetory.CreateAsync(guest);
+
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = guest.Id }, guest);
         }
 
         // PUT /guests/{id}
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, UpdateGuestDto updateGuestDto)
+        public async Task<IActionResult> PutAsync(Guid id, UpdateGuestDto updateGuestDto)
         {
-            var existingGuest = guests.Where(guest => guest.Id == id).SingleOrDefault();
+            var existingGuest = await  guestsReposetory.GetAsync(id);
 
-            if(existingGuest == null)
+            if (existingGuest == null)
             {
                 return NotFound();
             }
 
+            existingGuest.FirstName = updateGuestDto.FirstName;
+            existingGuest.LastName = updateGuestDto.LastName;
 
-            var updatedGuest = existingGuest with{
-                FirstName = updateGuestDto.FirstName,
-                LastName = updateGuestDto.LastName
-            };
-
-            var index = guests.FindIndex(existingGuest => existingGuest.Id == id);
-            guests[index] = updatedGuest;
+            await guestsReposetory.UpdateAsync(existingGuest);
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var index = guests.FindIndex(existingGuest => existingGuest.Id == id);
+            var guest = await  guestsReposetory.GetAsync(id);
 
-            if(index < 0)
+            if (guest == null)
             {
                 return NotFound();
             }
 
-            guests.RemoveAt(index);
+            await guestsReposetory.RemoveAsync(guest.Id);
 
             return NoContent();
         }
