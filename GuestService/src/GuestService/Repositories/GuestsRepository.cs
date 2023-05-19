@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Transactions;
 using MongoDB.Driver;
 using HotelManagemnt.GuestService.Entities;
-using System.Threading.Tasks;
 
 namespace HotelManagemnt.GuestService.Repositories
 {
