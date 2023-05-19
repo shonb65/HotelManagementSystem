@@ -23,6 +23,7 @@ namespace HotelManagemnt.GuestService.Controllers
             return guests;
         }
 
+        // GET /guests/{id}
         [HttpGet("{id}")]
         public GuestDto GetById(Guid id)
         {
@@ -31,11 +32,28 @@ namespace HotelManagemnt.GuestService.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(CreateGuestDto createGuestDto)
+        public ActionResult<GuestDto> Post(CreateGuestDto createGuestDto)
         {
             var guest = new GuestDto(Guid.NewGuid(), createGuestDto.FirstName, createGuestDto.LastName);
             guests.Add(guest);
             return CreatedAtAction(nameof(GetById), new { id = guest.Id }, guest);
+        }
+
+        // PUT /guests/{id}
+        [HttpPut("{id}")]
+        public IActionResult Put(Guid id, UpdateGuestDto updateGuestDto)
+        {
+            var existingGuest = guests.Where(guest => guest.Id == id).SingleOrDefault();
+
+            var updatedGuest = existingGuest with{
+                FirstName = updateGuestDto.FirstName,
+                LastName = updateGuestDto.LastName
+            };
+
+            var index = guests.FindIndex(existingGuest => existingGuest.Id == id);
+            guests[index] = updatedGuest;
+
+            return NoContent();
         }
 
     }
