@@ -13,10 +13,8 @@ namespace HotelManagemnt.GuestService.Repositories
         private readonly IMongoCollection<Guest> dbCollection;
         private readonly FilterDefinitionBuilder<Guest> filterBuilder = Builders<Guest>.Filter;
 
-        public GuestsReposetory()
+        public GuestsReposetory(IMongoDatabase database)
         {
-            var mongoClient = new MongoClient("mongodb://localhost:27017");
-            var database = mongoClient.GetDatabase("Guest");
             dbCollection = database.GetCollection<Guest>(collectionName);
         }
 

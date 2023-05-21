@@ -15,14 +15,12 @@ namespace HotelManagemnt.GuestService.Controllers
     [Route("guests")]
     public class GuestsController : ControllerBase
     {
-        // private static readonly List<GuestDto> guests = new()
-        // {
-        //     new GuestDto(Guid.NewGuid(), "Shon", "Buch"),
-        //     new GuestDto(Guid.NewGuid(), "Shon1", "Buch1"),
-        //     new GuestDto(Guid.NewGuid(), "Shon2", "Buch2")
-        // };
+        private readonly IGuestsReposetory guestsReposetory;
 
-        private readonly GuestsReposetory guestsReposetory = new();
+        public GuestsController(IGuestsReposetory guestsReposetory)
+        {
+            this.guestsReposetory = guestsReposetory;
+        }
 
         [HttpGet]
         public async  Task<IEnumerable<GuestDto>> GetAsync()
