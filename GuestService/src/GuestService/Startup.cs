@@ -17,7 +17,7 @@ using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson;
 using HotelManagemnt.GuestService.Settings;
 using MongoDB.Driver;
-
+using HotelManagemnt.GuestService.Repositories;
 
 namespace GuestService
 {

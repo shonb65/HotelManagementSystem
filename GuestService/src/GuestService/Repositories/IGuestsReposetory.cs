@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using HotelManagemnt.GuestService.Entities;
 using System.Collections.Generic;
     
-    public interface IGuestsReposetory
+    public interface IReposetory<T> where T : IEntity
     {
-        Task CreateAsync(Guest entity);
-        Task<IReadOnlyCollection<Guest>> GetAllAsync();
-        Task<Guest> GetAsync(Guid id);
+        Task CreateAsync(T entity);
+        Task<IReadOnlyCollection<T>> GetAllAsync();
+        Task<T> GetAsync(Guid id);
         Task RemoveAsync(Guid id);
-        Task UpdateAsync(Guest entity);
+        Task UpdateAsync(T entity);
     }

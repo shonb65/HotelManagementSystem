@@ -1,7 +1,7 @@
 using System;
 namespace HotelManagemnt.GuestService.Entities
 {
-    public class Guest
+    public class Guest : IEntity
     {
         public Guid Id { get; set; }
 

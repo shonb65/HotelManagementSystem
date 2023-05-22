@@ -7,7 +7,7 @@ using HotelManagemnt.GuestService.Entities;
 
 namespace HotelManagemnt.GuestService.Repositories
 {
-    public class GuestsReposetory : IGuestsReposetory
+    public class MongoReposetory<T> : IReposetory<T> where T : IEntity
     {
         private const string collectionName = "guests";
         private readonly IMongoCollection<Guest> dbCollection;
