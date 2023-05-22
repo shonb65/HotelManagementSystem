@@ -15,9 +15,9 @@ namespace HotelManagemnt.GuestService.Controllers
     [Route("guests")]
     public class GuestsController : ControllerBase
     {
-        private readonly IGuestsReposetory guestsReposetory;
+        private readonly IReposetory<Guest> guestsReposetory;
 
-        public GuestsController(IGuestsReposetory guestsReposetory)
+        public GuestsController(IReposetory<Guest> guestsReposetory)
         {
             this.guestsReposetory = guestsReposetory;
         }

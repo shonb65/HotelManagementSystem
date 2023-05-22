@@ -9,27 +9,26 @@ namespace HotelManagemnt.GuestService.Repositories
 {
     public class MongoReposetory<T> : IReposetory<T> where T : IEntity
     {
-        private const string collectionName = "guests";
-        private readonly IMongoCollection<Guest> dbCollection;
-        private readonly FilterDefinitionBuilder<Guest> filterBuilder = Builders<Guest>.Filter;
+        private readonly IMongoCollection<T> dbCollection;
+        private readonly FilterDefinitionBuilder<T> filterBuilder = Builders<T>.Filter;
 
-        public GuestsReposetory(IMongoDatabase database)
+        public MongoReposetory(IMongoDatabase database, string collectionName)
         {
-            dbCollection = database.GetCollection<Guest>(collectionName);
+            dbCollection = database.GetCollection<T>(collectionName);
         }
 
-        public async Task<IReadOnlyCollection<Guest>> GetAllAsync()
+        public async Task<IReadOnlyCollection<T>> GetAllAsync()
         {
             return await dbCollection.Find(filterBuilder.Empty).ToListAsync();
         }
 
-        public async Task<Guest> GetAsync(Guid id)
+        public async Task<T> GetAsync(Guid id)
         {
-            FilterDefinition<Guest> filter = filterBuilder.Eq(entity => entity.Id, id);
+            FilterDefinition<T> filter = filterBuilder.Eq(entity => entity.Id, id);
             return await dbCollection.Find(filter).FirstOrDefaultAsync();
         }
 
-        public async Task CreateAsync(Guest entity)
+        public async Task CreateAsync(T entity)
         {
             if (entity == null)
             {
@@ -39,20 +38,20 @@ namespace HotelManagemnt.GuestService.Repositories
             await dbCollection.InsertOneAsync(entity);
         }
 
-        public async Task UpdateAsync(Guest entity)
+        public async Task UpdateAsync(T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            FilterDefinition<Guest> filter = filterBuilder.Eq(existingEntity => existingEntity.Id, entity.Id);
+            FilterDefinition<T> filter = filterBuilder.Eq(existingEntity => existingEntity.Id, entity.Id);
             await dbCollection.ReplaceOneAsync(filter, entity);
         }
 
         public async Task RemoveAsync(Guid id)
         {
-            FilterDefinition<Guest> filter = filterBuilder.Eq(entity => entity.Id, id);
+            FilterDefinition<T> filter = filterBuilder.Eq(entity => entity.Id, id);
             await dbCollection.DeleteOneAsync(filter);
         }
     }

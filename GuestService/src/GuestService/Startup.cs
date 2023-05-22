@@ -18,6 +18,7 @@ using MongoDB.Bson;
 using HotelManagemnt.GuestService.Settings;
 using MongoDB.Driver;
 using HotelManagemnt.GuestService.Repositories;
+using HotelManagemnt.GuestService.Entities;
 
 namespace GuestService
 {
@@ -34,17 +35,10 @@ namespace GuestService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
-
             serviceSettings = Configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
 
-            services.AddSingleton(serviceProvider => {
-                var mongoDbSettings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
-                var mongoClient = new MongoClient(mongoDbSettings.ConnectionString);
-                return mongoClient.GetDatabase(serviceSettings.ServiceName);
-            });
-
-            services.AddSingleton<IGuestsReposetory, GuestsReposetory>();
+            services.AddMongo()
+                    .AddMongoRepository<Guest>("guests");
 
             services.AddControllers(options =>
             {
