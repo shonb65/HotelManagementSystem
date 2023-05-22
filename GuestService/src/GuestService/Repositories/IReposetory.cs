@@ -2,7 +2,9 @@ using System;
 using System.Threading.Tasks;
 using HotelManagemnt.GuestService.Entities;
 using System.Collections.Generic;
-    
+
+namespace HotelManagemnt.GuestService.Repositories
+{
     public interface IReposetory<T> where T : IEntity
     {
         Task CreateAsync(T entity);
@@ -11,3 +13,4 @@ using System.Collections.Generic;
         Task RemoveAsync(Guid id);
         Task UpdateAsync(T entity);
     }
+}
