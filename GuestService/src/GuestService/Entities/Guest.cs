@@ -1,4 +1,6 @@
 using System;
+using Common;
+
 namespace HotelManagemnt.GuestService.Entities
 {
     public class Guest : IEntity
