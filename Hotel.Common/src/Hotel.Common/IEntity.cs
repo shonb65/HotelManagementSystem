@@ -1,6 +1,6 @@
 using System;
 
-namespace HotelManagemnt.Common
+namespace Hotel.Common
 {
     public interface IEntity
     {

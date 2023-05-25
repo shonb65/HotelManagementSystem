@@ -3,10 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson;
-using HotelManagemnt.Common.Settings;
+using Hotel.Common.Settings;
 using MongoDB.Driver;
 
-namespace HotelManagemnt.Common.MongoDB
+
+namespace Hotel.Common.MongoDB
 {
 
 

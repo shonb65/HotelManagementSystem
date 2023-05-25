@@ -1,24 +1,12 @@
-using System.Buffers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
-using MongoDB.Bson;
-using HotelManagemnt.GuestService.Settings;
-using MongoDB.Driver;
-using HotelManagemnt.GuestService.Repositories;
 using HotelManagemnt.GuestService.Entities;
+using HotelManagemnt.Common.MongoDB;
+using HotelManagemnt.Common.Settings;
 
 namespace GuestService
 {

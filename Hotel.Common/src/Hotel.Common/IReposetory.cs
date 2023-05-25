@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq.Expressions;
     
-namespace HotelManagemnt.Common
+namespace Hotel.Common
 {
     public interface IReposetory<T> where T : IEntity
     {

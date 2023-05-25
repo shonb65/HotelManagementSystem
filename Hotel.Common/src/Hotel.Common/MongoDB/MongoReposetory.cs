@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using MongoDB.Driver;
 
 
-namespace HotelManagemnt.Common.MongoDB
+namespace Hotel.Common.MongoDB
 {
     public class MongoReposetory<T> : IReposetory<T> where T : IEntity
     {

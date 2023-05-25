@@ -1,5 +1,5 @@
 using System;
-using Common;
+using HotelManagemnt.Common;
 
 namespace HotelManagemnt.GuestService.Entities
 {
