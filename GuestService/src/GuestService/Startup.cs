@@ -5,8 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using HotelManagemnt.GuestService.Entities;
-using HotelManagemnt.Common.MongoDB;
 using HotelManagemnt.Common.Settings;
+using HotelManagemnt.Common.MongoDB;
 
 namespace GuestService
 {

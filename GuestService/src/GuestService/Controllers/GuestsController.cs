@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using HotelManagemnt.GuestService.Dtos;
 using System.Linq;
 using HotelManagemnt.GuestService.Entities;
-using HotelManagemnt.Common.Settings;
 using HotelManagemnt.Common;
 
 namespace HotelManagemnt.GuestService.Controllers
