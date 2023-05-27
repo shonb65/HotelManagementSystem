@@ -1,7 +1,9 @@
 using System;
+using HotelManagemnt.Common; 
+
 namespace HotelManagemnt.GuestService.Entities
 {
-    public class Guest : IEntity
+    public class Guest : IEntity  
     {
         public Guid Id { get; set; }
 

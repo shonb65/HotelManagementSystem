@@ -1,4 +1,4 @@
-namespace HotelManagemnt.GuestService.Settings
+namespace Hotel.Common.Settings
 {
     public class MongoDbSettings
     {

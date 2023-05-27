@@ -1,11 +1,8 @@
-using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Transactions;
+using System.Linq.Expressions;
 using MongoDB.Driver;
-using HotelManagemnt.GuestService.Entities;
 
-namespace HotelManagemnt.GuestService.Repositories
+
+namespace Hotel.Common.MongoDB
 {
     public class MongoReposetory<T> : IReposetory<T> where T : IEntity
     {
@@ -21,10 +18,17 @@ namespace HotelManagemnt.GuestService.Repositories
         {
             return await dbCollection.Find(filterBuilder.Empty).ToListAsync();
         }
-
+        public async Task<IReadOnlyCollection<T>> GetAllAsync(Expression<Func<T, bool>> filter)
+        {
+            return await dbCollection.Find(filter).ToListAsync();
+        }
         public async Task<T> GetAsync(Guid id)
         {
             FilterDefinition<T> filter = filterBuilder.Eq(entity => entity.Id, id);
+            return await dbCollection.Find(filter).FirstOrDefaultAsync();
+        }
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter)
+        {
             return await dbCollection.Find(filter).FirstOrDefaultAsync();
         }
 
