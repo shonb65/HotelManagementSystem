@@ -1,13 +1,19 @@
 using HotelManagemnt.ReservationService.Dtos;
 using HotelManagemnt.ReservationService.Entities;
 
+
 namespace HotelManagemnt.ReservationService.Extensions
 {
     public static class Extensions
     {
-        public static ReservationDto AsDto(this ReservationItem reservationItem)
+        public static ReservationDto AsReservationDto(this Reservation reservation)
         {
-            return new ReservationDto(reservationItem.reservationId, reservationItem.guestId, reservationItem.roomId, reservationItem.startDate, reservationItem.endDate, reservationItem.totalPrice);
+            return new ReservationDto(reservation.reservationId, reservation.guestId, reservation.roomId, reservation.startDate, reservation.endDate, reservation.totalPrice);
+        }
+
+        public static GuestReservationDto AsGuestReservationDto(this Reservation reservation)
+        {
+            return new GuestReservationDto(reservation.guestId, reservation.roomId, reservation.startDate, reservation.endDate, reservation.totalPrice);
         }
     }
 }
