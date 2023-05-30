@@ -2,7 +2,7 @@ using HotelManagemnt.Common;
 
 namespace HotelManagemnt.ReservationService.Entities
 {
-    public class ReservationItem : IEntity
+    public class Reservation : IEntity
     {
         public Guid Id { get; set; }
         public Guid guestId { get; set; }
