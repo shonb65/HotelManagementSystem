@@ -5,11 +5,10 @@ namespace HotelManagemnt.ReservationService.Entities
     public class Reservation : IEntity
     {
         public Guid Id { get; set; }
-        public Guid guestId { get; set; }
-        public Guid reservationId { get; set; }
-        public int roomId { get; set; }
-        public DateTimeOffset startDate { get; set; }
-        public DateTimeOffset endDate { get; set; }
-        public int totalPrice { get; set; }
+        public Guid GuestId { get; set; }
+        public int RoomId { get; set; }
+        public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset EndDate { get; set; }
+        public int TotalPrice { get; set; }
     }
 }

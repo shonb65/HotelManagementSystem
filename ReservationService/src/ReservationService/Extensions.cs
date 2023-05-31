@@ -8,12 +8,12 @@ namespace HotelManagemnt.ReservationService.Extensions
     {
         public static ReservationDto AsReservationDto(this Reservation reservation)
         {
-            return new ReservationDto(reservation.reservationId, reservation.guestId, reservation.roomId, reservation.startDate, reservation.endDate, reservation.totalPrice);
+            return new ReservationDto(reservation.Id, reservation.GuestId, reservation.RoomId, reservation.StartDate, reservation.EndDate, reservation.TotalPrice);
         }
 
         public static GuestReservationDto AsGuestReservationDto(this Reservation reservation)
         {
-            return new GuestReservationDto(reservation.guestId, reservation.roomId, reservation.startDate, reservation.endDate, reservation.totalPrice);
+            return new GuestReservationDto(reservation.GuestId, reservation.RoomId, reservation.StartDate, reservation.EndDate, reservation.TotalPrice);
         }
     }
 }

@@ -18,25 +18,55 @@ namespace HotelManagemnt.ReservationService.Controllers
         }
 
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ReservationDto>> GetReservationAsync(Guid id)
+        {
+            var reservation = await reservationsRepository.GetAsync(id);
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<GuestReservationDto>>> GetReservationAsync(Guid guestId)
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            return reservation.AsReservationDto();
+        }
+
+
+        [HttpGet("user")]
+        public async Task<ActionResult<IEnumerable<GuestReservationDto>>> GetReservationByGuestIdAsync(Guid guestId)
         {
             if (guestId == Guid.Empty)
             {
                 return BadRequest();
             }
 
-            var reservations = (await reservationsRepository.GetAllAsync(reservation => reservation.guestId == guestId))
+            var reservations = (await reservationsRepository.GetAllAsync(reservation => reservation.GuestId == guestId))
                                 .Select(reservation => reservation.AsGuestReservationDto());
 
             return Ok(reservations);
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostAsync()
-        {
-            return Ok();
+        public async Task<ActionResult<ReservationDto>> PostAsync(CreateReservationDto createReservationDto)
+        {    
+            // also needsto check if exist        
+            if (createReservationDto.guestId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var reservation = new Reservation
+            {
+                Id = new Guid(),
+                GuestId = createReservationDto.guestId,
+                RoomId = createReservationDto.roomId,
+                StartDate = createReservationDto.startDate,
+                EndDate = createReservationDto.endDate,
+                TotalPrice = createReservationDto.totalPrice
+            };
+
+            await reservationsRepository.CreateAsync(reservation);
+            return CreatedAtAction(nameof(GetReservationAsync), new { id = reservation.Id });
         }
 
 
