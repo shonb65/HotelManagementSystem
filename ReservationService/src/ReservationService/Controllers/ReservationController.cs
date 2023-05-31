@@ -66,7 +66,7 @@ namespace HotelManagemnt.ReservationService.Controllers
             };
 
             await reservationsRepository.CreateAsync(reservation);
-            return CreatedAtAction(nameof(GetReservationAsync), new { id = reservation.Id });
+            return CreatedAtAction(nameof(GetReservationAsync), new { id = reservation.Id }, reservation);
         }
 
 
