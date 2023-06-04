@@ -3,6 +3,8 @@ using HotelManagemnt.ReservationService.Entities;
 using Microsoft.AspNetCore.Mvc;
 using HotelManagemnt.ReservationService.Dtos;
 using HotelManagemnt.ReservationService.Extensions;
+using MassTransit;
+using HotelManagemnt.ReservationServiceContracts;
 
 namespace HotelManagemnt.ReservationService.Controllers
 {
@@ -11,10 +13,13 @@ namespace HotelManagemnt.ReservationService.Controllers
     public class ReservationController : ControllerBase
     {
         private readonly IReposetory<Reservation> reservationsRepository;
+        private readonly IPublishEndpoint publishEndpoint;
+        
 
-        public ReservationController(IReposetory<Reservation> reservationsRepository)
+        public ReservationController(IReposetory<Reservation> reservationsRepository, IPublishEndpoint publishEndpoint)
         {
             this.reservationsRepository = reservationsRepository;
+            this.publishEndpoint = publishEndpoint;
         }
 
 
@@ -66,6 +71,11 @@ namespace HotelManagemnt.ReservationService.Controllers
             };
 
             await reservationsRepository.CreateAsync(reservation);
+
+            string roomStatus = "Not available";
+
+            await publishEndpoint.Publish(new ReservationCreated(reservation.Id, reservation.RoomId, roomStatus));
+
             return CreatedAtAction(nameof(GetReservationAsync), new { id = reservation.Id }, reservation);
         }
 
