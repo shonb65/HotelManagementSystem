@@ -1,4 +1,4 @@
-using HotelManagemnt.Common;
+using Hotel.Common;
 
 namespace HotelManagemnt.ReservationService.Entities
 {

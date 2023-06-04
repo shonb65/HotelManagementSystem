@@ -1,4 +1,5 @@
-using HotelManagemnt.Common.MongoDB;
+using Hotel.Common.MassTransit;
+using Hotel.Common.MongoDB;
 using HotelManagemnt.ReservationService.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMongo()
     .AddMongoRepository<Reservation>("reservation");
+builder.Services.AddMassTransitWithRabbitMQ();
 
 var app = builder.Build();
 

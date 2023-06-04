@@ -1,4 +1,4 @@
-using HotelManagemnt.Common;
+using Hotel.Common;
 using HotelManagemnt.ReservationService.Entities;
 using Microsoft.AspNetCore.Mvc;
 using HotelManagemnt.ReservationService.Dtos;
